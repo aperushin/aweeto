@@ -56,7 +56,7 @@ class User(AbstractUser):
     location_id = models.ForeignKey(Location, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.role
+        return self.username
 
     class Meta:
         verbose_name = 'Пользователь'

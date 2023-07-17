@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from models import Ad, User, Category, Location
+from .models import Ad, User, Category, Location
 
 
 admin.site.register(User, UserAdmin)
