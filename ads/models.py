@@ -13,24 +13,6 @@ class Category(models.Model):
         verbose_name_plural = 'Категории'
 
 
-class Ad(models.Model):
-    name = models.CharField(max_length=255)
-    author = models.CharField(max_length=50)
-    price = models.IntegerField()
-    description = models.CharField(max_length=1000)
-    address = models.CharField(max_length=255)
-    is_published = models.BooleanField(default=False)
-    image = models.ImageField(null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Объявление'
-        verbose_name_plural = 'Объявления'
-
-
 class Location(models.Model):
     name = models.CharField(max_length=255)
     lat = models.DecimalField(max_digits=10, decimal_places=7)
@@ -53,7 +35,7 @@ class User(AbstractUser):
 
     role = models.CharField(max_length=9, choices=ROLES, default='member')
     age = models.PositiveSmallIntegerField()
-    location_id = models.ForeignKey(Location, on_delete=models.CASCADE)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.username
@@ -61,3 +43,20 @@ class User(AbstractUser):
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+
+
+class Ad(models.Model):
+    name = models.CharField(max_length=255)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    price = models.IntegerField()
+    description = models.CharField(max_length=1000)
+    is_published = models.BooleanField(default=False)
+    image = models.ImageField(null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Объявление'
+        verbose_name_plural = 'Объявления'
