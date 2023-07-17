@@ -1,0 +1,212 @@
+[
+{
+    "model": "ads.user",
+    "pk": 1,
+    "fields": {
+        "password": "gZvptL",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "pnikifirov",
+        "first_name": "Павел",
+        "last_name": "Никифоров",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-07-17T13:48:54.330Z",
+        "role": "member",
+        "age": 21,
+        "location": 1,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "ads.user",
+    "pk": 2,
+    "fields": {
+        "password": "4fVqL2",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "abiba_1341",
+        "first_name": "Альбина",
+        "last_name": "Игнатьева",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-07-17T13:48:54.334Z",
+        "role": "moderator",
+        "age": 24,
+        "location": 3,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "ads.user",
+    "pk": 3,
+    "fields": {
+        "password": "o535pj",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "vanya777",
+        "first_name": "Иван",
+        "last_name": "Сысоев",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-07-17T13:48:54.337Z",
+        "role": "admin",
+        "age": 29,
+        "location": 8,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "ads.user",
+    "pk": 4,
+    "fields": {
+        "password": "d49rSO",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "orlanfree",
+        "first_name": "Марина",
+        "last_name": "Беркутова",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-07-17T13:48:54.340Z",
+        "role": "moderator",
+        "age": 19,
+        "location": 10,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "ads.user",
+    "pk": 5,
+    "fields": {
+        "password": "wCqlVE",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "galina_ivanova",
+        "first_name": "Галина",
+        "last_name": "Иванова",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-07-17T13:48:54.342Z",
+        "role": "member",
+        "age": 41,
+        "location": 2,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "ads.user",
+    "pk": 6,
+    "fields": {
+        "password": "xuR2jf",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "petr_bo",
+        "first_name": "Петр",
+        "last_name": "Бойченко",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-07-17T13:48:54.345Z",
+        "role": "member",
+        "age": 37,
+        "location": 4,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "ads.user",
+    "pk": 7,
+    "fields": {
+        "password": "gzP4vR",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "nikitapro",
+        "first_name": "Никита",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-07-17T13:48:54.348Z",
+        "role": "member",
+        "age": 26,
+        "location": 7,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "ads.user",
+    "pk": 8,
+    "fields": {
+        "password": "zo0rj6",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "riverna",
+        "first_name": "Виолетта",
+        "last_name": "Петушок",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-07-17T13:48:54.350Z",
+        "role": "member",
+        "age": 24,
+        "location": 5,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "ads.user",
+    "pk": 9,
+    "fields": {
+        "password": "daMocL",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "gulnara321",
+        "first_name": "Гульнара",
+        "last_name": "Ибрагимова",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-07-17T13:48:54.353Z",
+        "role": "moderator",
+        "age": 22,
+        "location": 9,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "ads.user",
+    "pk": 10,
+    "fields": {
+        "password": "sasha123456",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "dragon84",
+        "first_name": "Борис",
+        "last_name": "Зайка",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-07-17T13:48:54.354Z",
+        "role": "member",
+        "age": 35,
+        "location": 6,
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]
