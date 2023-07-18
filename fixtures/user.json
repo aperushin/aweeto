@@ -1,6 +1,6 @@
 [
 {
-    "model": "ads.user",
+    "model": "users.user",
     "pk": 1,
     "fields": {
         "password": "gZvptL",
@@ -21,7 +21,7 @@
     }
 },
 {
-    "model": "ads.user",
+    "model": "users.user",
     "pk": 2,
     "fields": {
         "password": "4fVqL2",
@@ -42,7 +42,7 @@
     }
 },
 {
-    "model": "ads.user",
+    "model": "users.user",
     "pk": 3,
     "fields": {
         "password": "o535pj",
@@ -63,7 +63,7 @@
     }
 },
 {
-    "model": "ads.user",
+    "model": "users.user",
     "pk": 4,
     "fields": {
         "password": "d49rSO",
@@ -84,7 +84,7 @@
     }
 },
 {
-    "model": "ads.user",
+    "model": "users.user",
     "pk": 5,
     "fields": {
         "password": "wCqlVE",
@@ -105,7 +105,7 @@
     }
 },
 {
-    "model": "ads.user",
+    "model": "users.user",
     "pk": 6,
     "fields": {
         "password": "xuR2jf",
@@ -126,7 +126,7 @@
     }
 },
 {
-    "model": "ads.user",
+    "model": "users.user",
     "pk": 7,
     "fields": {
         "password": "gzP4vR",
@@ -147,7 +147,7 @@
     }
 },
 {
-    "model": "ads.user",
+    "model": "users.user",
     "pk": 8,
     "fields": {
         "password": "zo0rj6",
@@ -168,7 +168,7 @@
     }
 },
 {
-    "model": "ads.user",
+    "model": "users.user",
     "pk": 9,
     "fields": {
         "password": "daMocL",
@@ -189,7 +189,7 @@
     }
 },
 {
-    "model": "ads.user",
+    "model": "users.user",
     "pk": 10,
     "fields": {
         "password": "sasha123456",

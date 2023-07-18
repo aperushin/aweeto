@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ads',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -132,4 +133,4 @@ TOTAL_ON_PAGE = 10
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = "ads.User"
+AUTH_USER_MODEL = "users.User"

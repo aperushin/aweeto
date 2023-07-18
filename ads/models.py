@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 
 
 class Category(models.Model):
@@ -26,29 +25,9 @@ class Location(models.Model):
         verbose_name_plural = 'Локации'
 
 
-class User(AbstractUser):
-    ROLES = (
-        ('member', 'Member'),
-        ('moderator', 'Moderator'),
-        ('admin', 'Admin')
-    )
-
-    role = models.CharField(max_length=9, choices=ROLES, default='member')
-    age = models.PositiveSmallIntegerField()
-    location = models.ManyToManyField(Location)
-
-    def __str__(self):
-        return self.username
-
-    class Meta:
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
-        ordering = ['username']
-
-
 class Ad(models.Model):
     name = models.CharField(max_length=255)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey('users.User', on_delete=models.CASCADE)
     price = models.IntegerField()
     description = models.CharField(max_length=1000)
     is_published = models.BooleanField(default=False)
