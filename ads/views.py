@@ -88,11 +88,17 @@ class AdUpdateView(UpdateView):
         super().post(request, *args, **kwargs)
         ad_data = json.loads(request.body)
 
-        self.object.name = ad_data['name']
-        self.object.author_id = ad_data['author_id']
-        self.object.price = ad_data['price']
-        self.object.description = ad_data['description']
-        self.object.category_id = ad_data['category_id']
+        if 'name' in ad_data:
+            self.object.name = ad_data['name']
+        if 'author_id' in ad_data:
+            self.object.author_id = ad_data['author_id']
+        if 'price' in ad_data:
+            self.object.price = ad_data['price']
+        if 'description' in ad_data:
+            self.object.description = ad_data['description']
+        if 'category_id' in ad_data:
+            self.object.category_id = ad_data['category_id']
+
         self.object.save()
 
         return JsonResponse({

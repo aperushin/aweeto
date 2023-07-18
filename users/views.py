@@ -90,19 +90,26 @@ class UserUpdateView(UpdateView):
         super().post(request, *args, **kwargs)
         user_data = json.loads(request.body)
 
-        self.object.username = user_data['username']
-        self.object.password = user_data['password']
-        self.object.first_name = user_data['first_name']
-        self.object.last_name = user_data['last_name']
-        self.object.role = user_data['role']
-        self.object.age = user_data['age']
-        self.object.location.clear()
+        if 'username' in user_data:
+            self.object.username = user_data['username']
+        if 'password' in user_data:
+            self.object.password = user_data['password']
+        if 'first_name' in user_data:
+            self.object.first_name = user_data['first_name']
+        if 'last_name' in user_data:
+            self.object.last_name = user_data['last_name']
+        if 'role' in user_data:
+            self.object.role = user_data['role']
+        if 'age' in user_data:
+            self.object.age = user_data['age']
+        if 'locations' in user_data:
+            self.object.location.clear()
 
-        for location in user_data['locations']:
-            location_obj, created = Location.objects.get_or_create(
-                name=location,
-            )
-            self.object.location.add(location_obj)
+            for location in user_data['locations']:
+                location_obj, created = Location.objects.get_or_create(
+                    name=location,
+                )
+                self.object.location.add(location_obj)
 
         self.object.save()
 
