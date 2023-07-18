@@ -3,7 +3,6 @@ import json
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
-from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, CreateView
 
@@ -49,7 +48,6 @@ class AdCreateView(CreateView):
         )
 
         ad.category = get_object_or_404(Category, pk=ad_data['category_id'])
-
         ad.save()
 
         return JsonResponse({
@@ -71,34 +69,40 @@ class AdDetailView(DetailView):
         return JsonResponse({
             'id': ad.id,
             'name': ad.name,
-            'author': ad.author,
+            'author_id': ad.author_id,
             'price': ad.price,
             'description': ad.description,
-            'address': ad.address,
+            'category_id': ad.category_id,
             'is_published': ad.is_published,
+            'image': ad.image,
         })
 
 
-@method_decorator(csrf_exempt, name='dispatch')
-class CategoryView(View):
-    def get(self, request):
-        categories = Category.objects.all()
+class CategoryListView(ListView):
+    model = Category
 
-        responce = []
-        for category in categories:
-            responce.append({
+    def get(self, request, *args, **kwargs):
+        super().get(request, *args, **kwargs)
+
+        response = []
+        for category in self.object_list:
+            response.append({
                 'id': category.id,
                 'name': category.name,
             })
 
-        return JsonResponse(responce, safe=False, json_dumps_params={'ensure_ascii': False})
+        return JsonResponse(response, safe=False, json_dumps_params={'ensure_ascii': False})
 
-    def post(self, request):
+
+@method_decorator(csrf_exempt, name='dispatch')
+class CategoryCreateView(CreateView):
+    model = Category
+    fields = ['name']
+
+    def post(self, request, *args, **kwargs):
         category_data = json.loads(request.body)
 
-        category = Category()
-        category.name = category_data['name']
-        category.save()
+        category = Category.objects.create(name=category_data['name'])
 
         return JsonResponse({
             'id': category.id,
