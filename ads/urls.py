@@ -1,5 +1,7 @@
+from django.conf.urls.static import static
 from django.urls import path
 
+from avwto import settings
 from ads import views
 
 urlpatterns = [
@@ -13,5 +15,9 @@ urlpatterns = [
     path('ad/create/', views.AdCreateView.as_view()),
     path('ad/<int:pk>/', views.AdDetailView.as_view()),
     path('ad/<int:pk>/update/', views.AdUpdateView.as_view()),
+    path('ad/<int:pk>/upload_image/', views.AdImageView.as_view()),
     path('ad/<int:pk>/delete/', views.AdDeleteView.as_view()),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
