@@ -4,14 +4,14 @@ from django.db import models
 from ads.models import Location
 
 
-class User(AbstractUser):
-    ROLES = (
-        ('member', 'Member'),
-        ('moderator', 'Moderator'),
-        ('admin', 'Admin')
-    )
+class UserRoles(models.TextChoices):
+    MEMBER = ('member', 'Member')
+    MODERATOR = ('moderator', 'Moderator')
+    ADMIN = ('admin', 'Admin')
 
-    role = models.CharField(max_length=9, choices=ROLES, default='member')
+
+class User(AbstractUser):
+    role = models.CharField(max_length=9, choices=UserRoles.choices, default='member')
     age = models.PositiveSmallIntegerField()
     location = models.ManyToManyField(Location)
 
