@@ -1,53 +1,63 @@
 import json
 
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView, CreateView
 
-from ads.models import Ad, Category
+from ads.models import Ad, Category, User
 
 
 def index(request):
     return JsonResponse({'status': 'ok'})
 
 
-@method_decorator(csrf_exempt, name='dispatch')
-class AdView(View):
-    def get(self, request):
-        ads = Ad.objects.all()
+class AdListView(ListView):
+    model = Ad
 
-        responce = []
-        for ad in ads:
-            responce.append({
+    def get(self, request, *args, **kwargs):
+        super().get(request, *args, **kwargs)
+
+        response = []
+        for ad in self.object_list:
+            response.append({
                 'id': ad.id,
                 'name': ad.name,
-                'author': ad.author,
+                'author_id': ad.author_id,
                 'price': ad.price,
             })
 
-        return JsonResponse(responce, safe=False, json_dumps_params={'ensure_ascii': False})
+        return JsonResponse(response, safe=False, json_dumps_params={'ensure_ascii': False})
 
-    def post(self, request):
+
+@method_decorator(csrf_exempt, name='dispatch')
+class AdCreateView(CreateView):
+    model = Ad
+    fields = ['name', 'author', 'price', 'description', 'is_published', 'category']
+
+    def post(self, request, *args, **kwargs):
         ad_data = json.loads(request.body)
 
-        ad = Ad()
-        ad.name = ad_data['name']
-        ad.author = ad_data['author']
-        ad.price = ad_data['price']
-        ad.description = ad_data['description']
-        ad.address = ad_data['address']
-        ad.is_published = ad_data['is_published']
+        ad = Ad.objects.create(
+            name=ad_data['name'],
+            price=ad_data['price'],
+            author=get_object_or_404(User, pk=ad_data['author_id']),
+            description=ad_data['description'],
+            is_published=ad_data['is_published'],
+        )
+
+        ad.category = get_object_or_404(Category, pk=ad_data['category_id'])
+
         ad.save()
 
         return JsonResponse({
             'id': ad.id,
             'name': ad.name,
-            'author': ad.author,
+            'author_id': ad.author_id,
             'price': ad.price,
             'description': ad.description,
-            'address': ad.address,
             'is_published': ad.is_published,
         })
 
