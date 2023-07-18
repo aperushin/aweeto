@@ -15,7 +15,7 @@
         "date_joined": "2023-07-17T13:48:54.330Z",
         "role": "member",
         "age": 21,
-        "location": 1,
+        "location": [1],
         "groups": [],
         "user_permissions": []
     }
@@ -36,7 +36,7 @@
         "date_joined": "2023-07-17T13:48:54.334Z",
         "role": "moderator",
         "age": 24,
-        "location": 3,
+        "location": [3],
         "groups": [],
         "user_permissions": []
     }
@@ -57,7 +57,7 @@
         "date_joined": "2023-07-17T13:48:54.337Z",
         "role": "admin",
         "age": 29,
-        "location": 8,
+        "location": [8],
         "groups": [],
         "user_permissions": []
     }
@@ -78,7 +78,7 @@
         "date_joined": "2023-07-17T13:48:54.340Z",
         "role": "moderator",
         "age": 19,
-        "location": 10,
+        "location": [10],
         "groups": [],
         "user_permissions": []
     }
@@ -99,7 +99,7 @@
         "date_joined": "2023-07-17T13:48:54.342Z",
         "role": "member",
         "age": 41,
-        "location": 2,
+        "location": [2],
         "groups": [],
         "user_permissions": []
     }
@@ -120,7 +120,7 @@
         "date_joined": "2023-07-17T13:48:54.345Z",
         "role": "member",
         "age": 37,
-        "location": 4,
+        "location": [4],
         "groups": [],
         "user_permissions": []
     }
@@ -141,7 +141,7 @@
         "date_joined": "2023-07-17T13:48:54.348Z",
         "role": "member",
         "age": 26,
-        "location": 7,
+        "location": [7],
         "groups": [],
         "user_permissions": []
     }
@@ -162,7 +162,7 @@
         "date_joined": "2023-07-17T13:48:54.350Z",
         "role": "member",
         "age": 24,
-        "location": 5,
+        "location": [5],
         "groups": [],
         "user_permissions": []
     }
@@ -183,7 +183,7 @@
         "date_joined": "2023-07-17T13:48:54.353Z",
         "role": "moderator",
         "age": 22,
-        "location": 9,
+        "location": [9],
         "groups": [],
         "user_permissions": []
     }
@@ -204,7 +204,7 @@
         "date_joined": "2023-07-17T13:48:54.354Z",
         "role": "member",
         "age": 35,
-        "location": 6,
+        "location": [6],
         "groups": [],
         "user_permissions": []
     }

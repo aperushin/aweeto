@@ -35,7 +35,7 @@ class User(AbstractUser):
 
     role = models.CharField(max_length=9, choices=ROLES, default='member')
     age = models.PositiveSmallIntegerField()
-    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    location = models.ManyToManyField(Location)
 
     def __str__(self):
         return self.username
