@@ -8,7 +8,9 @@ from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from rest_framework.generics import CreateAPIView
 from users.models import User
+from users.serializers import UserCreateSerializer
 
 
 class UserListView(ListView):
@@ -46,39 +48,9 @@ class UserListView(ListView):
         return JsonResponse(response, safe=False, json_dumps_params={'ensure_ascii': False})
 
 
-@method_decorator(csrf_exempt, name='dispatch')
-class UserCreateView(CreateView):
-    model = User
-    fields = ['username', 'password', 'first_name', 'last_name', 'role', 'age', 'location']
-
-    def post(self, request, *args, **kwargs):
-        user_data = json.loads(request.body)
-
-        user = User.objects.create(
-            username=user_data['username'],
-            password=user_data['password'],
-            first_name=user_data['first_name'],
-            last_name=user_data['last_name'],
-            role=user_data['role'],
-            age=user_data['age'],
-        )
-
-        for location in user_data['locations']:
-            location_obj, created = Location.objects.get_or_create(
-                name=location,
-            )
-
-            user.location.add(location_obj)
-
-        return JsonResponse({
-                'id': user.id,
-                'username': user.username,
-                'first_name': user.first_name,
-                'last_name': user.last_name,
-                'role': user.role,
-                'age': user.age,
-                'locations': [location.name for location in user.location.all()],
-            })
+class UserCreateView(CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserCreateSerializer
 
 
 @method_decorator(csrf_exempt, name='dispatch')
