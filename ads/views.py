@@ -1,13 +1,15 @@
 import json
 
+from ads.serializers import LocationSerializer
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
+from rest_framework.viewsets import ModelViewSet
 
-from ads.models import Ad, Category
+from ads.models import Ad, Category, Location
 from users.models import User
 from avwto.settings import TOTAL_ON_PAGE
 
@@ -239,3 +241,8 @@ class CategoryDetailView(DetailView):
             'id': category.id,
             'name': category.name,
         })
+
+
+class LocationViewSet(ModelViewSet):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer

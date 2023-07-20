@@ -20,7 +20,6 @@ from django.conf.urls.static import static
 
 from avwto import settings
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('ads.urls')),

@@ -7,7 +7,7 @@ from django.db.models import Count, Q
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic import ListView, UpdateView, DeleteView, DetailView
 from rest_framework.generics import CreateAPIView
 from users.models import User
 from users.serializers import UserCreateSerializer
