@@ -1,17 +1,17 @@
 import json
 
-from ads.serializers import LocationSerializer
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
+from rest_framework.generics import ListAPIView
 from rest_framework.viewsets import ModelViewSet
 
 from ads.models import Ad, Category, Location
 from users.models import User
-from avwto.settings import TOTAL_ON_PAGE
+from ads.serializers import LocationSerializer, AdListSerializer
 
 
 def index(request):
@@ -21,34 +21,16 @@ def index(request):
 # Ad views
 
 
-class AdListView(ListView):
-    model = Ad
+class AdListView(ListAPIView):
+    queryset = Ad.objects.order_by('-price')
+    serializer_class = AdListSerializer
 
     def get(self, request, *args, **kwargs):
-        super().get(request, *args, **kwargs)
+        category_id = request.GET.get('cat', None)
+        if category_id:
+            self.queryset = self.queryset.filter(category_id=category_id)
 
-        self.object_list = self.object_list.order_by('-price')
-
-        paginator = Paginator(self.object_list, TOTAL_ON_PAGE)
-        page_num = int(request.GET.get('page', 1))
-        page_obj = paginator.get_page(page_num)
-
-        ads = []
-        for ad in page_obj:
-            ads.append({
-                'id': ad.id,
-                'name': ad.name,
-                'author_id': ad.author_id,
-                'price': ad.price,
-            })
-
-        response = {
-            'items': ads,
-            'num_pages': paginator.num_pages,
-            'total': paginator.count
-        }
-
-        return JsonResponse(response, safe=False, json_dumps_params={'ensure_ascii': False})
+        return super().get(request, *args, **kwargs)
 
 
 @method_decorator(csrf_exempt, name='dispatch')
