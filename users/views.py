@@ -14,6 +14,7 @@ class UserViewSet(ModelViewSet):
         'list': UserListSerializer,
         'create': UserCreateSerializer,
         'update': UserUpdateSerializer,
+        'partial_update': UserUpdateSerializer,
     }
 
     def get_serializer_class(self):

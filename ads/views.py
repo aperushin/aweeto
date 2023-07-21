@@ -28,6 +28,7 @@ class AdViewSet(ModelViewSet):
         'list': AdListSerializer,
         'create': AdCreateSerializer,
         'update': AdUpdateSerializer,
+        'partial_update': AdUpdateSerializer,
     }
 
     def get_serializer_class(self):
