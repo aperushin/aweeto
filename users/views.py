@@ -1,5 +1,4 @@
 from django.db.models import Count, Q
-from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, RetrieveAPIView, DestroyAPIView
 from rest_framework.viewsets import ModelViewSet
 
 from users.models import User, Location
@@ -8,29 +7,22 @@ from users.serializers import (
 )
 
 
-class UserListView(ListAPIView):
-    queryset = User.objects.annotate(total_ads=Count('ad', filter=Q(ad__is_published=True))).order_by('username')
-    serializer_class = UserListSerializer
-
-
-class UserDetailView(RetrieveAPIView):
+class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
-    serializer_class = UserDetailSerializer
+    default_serializer = UserDetailSerializer
+    serializer_classes = {
+        'list': UserListSerializer,
+        'create': UserCreateSerializer,
+        'update': UserUpdateSerializer,
+    }
 
+    def get_serializer_class(self):
+        return self.serializer_classes.get(self.action, self.default_serializer)
 
-class UserCreateView(CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserCreateSerializer
-
-
-class UserUpdateView(UpdateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserUpdateSerializer
-
-
-class UserDeleteView(DestroyAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserDetailSerializer
+    def list(self, request, *args, **kwargs):
+        self.queryset = User.objects.annotate(total_ads=Count('ad', filter=Q(ad__is_published=True)))
+        self.queryset = self.queryset.order_by('username')
+        return super().list(request, *args, **kwargs)
 
 
 class LocationViewSet(ModelViewSet):

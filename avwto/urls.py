@@ -20,18 +20,18 @@ from django.conf.urls.static import static
 from rest_framework.routers import SimpleRouter
 
 from avwto import settings
-from users.views import LocationViewSet
+from users.views import LocationViewSet, UserViewSet
 from ads.views import CategoryViewSet, AdViewSet
 
 router = SimpleRouter()
 router.register('location', LocationViewSet)
 router.register('cat', CategoryViewSet)
 router.register('ad', AdViewSet)
+router.register('user', UserViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('ads.urls')),
-    path('user/', include('users.urls')),
 ]
 
 urlpatterns += router.urls
