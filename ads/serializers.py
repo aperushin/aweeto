@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ads.models import Location, Ad, Category
+from ads.models import Ad, Category
 
 
 class AdListSerializer(serializers.ModelSerializer):
@@ -58,10 +58,4 @@ class AdUpdateImageSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = '__all__'
-
-
-class LocationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Location
         fields = '__all__'

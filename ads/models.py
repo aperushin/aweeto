@@ -12,19 +12,6 @@ class Category(models.Model):
         verbose_name_plural = 'Категории'
 
 
-class Location(models.Model):
-    name = models.CharField(max_length=255)
-    lat = models.DecimalField(max_digits=10, decimal_places=7, null=True)
-    lng = models.DecimalField(max_digits=10, decimal_places=7, null=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Локация'
-        verbose_name_plural = 'Локации'
-
-
 class Ad(models.Model):
     name = models.CharField(max_length=255)
     author = models.ForeignKey('users.User', on_delete=models.CASCADE)

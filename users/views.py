@@ -1,8 +1,11 @@
 from django.db.models import Count, Q
 from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, RetrieveAPIView, DestroyAPIView
+from rest_framework.viewsets import ModelViewSet
 
-from users.models import User
-from users.serializers import UserCreateSerializer, UserListSerializer, UserUpdateSerializer, UserDetailSerializer
+from users.models import User, Location
+from users.serializers import (
+    UserCreateSerializer, UserListSerializer, UserUpdateSerializer, UserDetailSerializer, LocationSerializer
+)
 
 
 class UserListView(ListAPIView):
@@ -28,3 +31,8 @@ class UserUpdateView(UpdateAPIView):
 class UserDeleteView(DestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserDetailSerializer
+
+
+class LocationViewSet(ModelViewSet):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer

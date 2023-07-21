@@ -1,8 +1,12 @@
 from rest_framework import serializers
 
-from ads.models import Location
-from ads.serializers import LocationSerializer
-from users.models import User
+from users.models import User, Location
+
+
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
+        fields = '__all__'
 
 
 class UserListSerializer(serializers.ModelSerializer):
