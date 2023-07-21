@@ -21,11 +21,12 @@ from rest_framework.routers import SimpleRouter
 
 from avwto import settings
 from users.views import LocationViewSet
-from ads.views import CategoryViewSet
+from ads.views import CategoryViewSet, AdViewSet
 
 router = SimpleRouter()
 router.register('location', LocationViewSet)
 router.register('cat', CategoryViewSet)
+router.register('ad', AdViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
