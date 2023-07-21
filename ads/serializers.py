@@ -20,11 +20,11 @@ class AdCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ad
-        fields = ['id', 'name', 'author', 'price', 'description', 'is_published', 'category']
+        exclude = ['image']
 
     def is_valid(self, raise_exception=False):
-        self.initial_data['author'] = self.initial_data.pop('author_id')
-        self.initial_data['category'] = self.initial_data.pop('category_id')
+        self.initial_data['author'] = self.initial_data.pop('author_id', None)
+        self.initial_data['category'] = self.initial_data.pop('category_id', None)
         return super().is_valid(raise_exception=raise_exception)
 
 
@@ -34,7 +34,7 @@ class AdUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ad
-        fields = ['id', 'name', 'author', 'price', 'description', 'is_published', 'category', 'image']
+        fields = '__all__'
 
     def is_valid(self, raise_exception=False):
         if 'author_id' in self.initial_data:
