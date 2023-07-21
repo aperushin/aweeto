@@ -1,17 +1,18 @@
 import json
 
-from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView
 from rest_framework.viewsets import ModelViewSet
 
 from ads.models import Ad, Category, Location
 from users.models import User
 from ads.serializers import LocationSerializer, AdListSerializer
+from ads.filtersets import AdFilterSet
 
 
 def index(request):
@@ -24,29 +25,8 @@ def index(request):
 class AdListView(ListAPIView):
     queryset = Ad.objects.order_by('-price')
     serializer_class = AdListSerializer
-
-    def get(self, request, *args, **kwargs):
-        category_id = request.GET.get('cat', None)
-        if category_id:
-            self.queryset = self.queryset.filter(category_id=category_id)
-
-        name_text = request.GET.get('text', None)
-        if name_text:
-            self.queryset = self.queryset.filter(name__icontains=name_text)
-
-        location = request.GET.get('location', None)
-        if location:
-            self.queryset = self.queryset.filter(author__location__name__icontains=location)
-
-        price_from = request.GET.get('price_from', None)
-        price_to = request.GET.get('price_to', None)
-
-        if price_from:
-            self.queryset = self.queryset.filter(price__gte=price_from)
-        if price_to:
-            self.queryset = self.queryset.filter(price__lte=price_to)
-
-        return super().get(request, *args, **kwargs)
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = AdFilterSet
 
 
 @method_decorator(csrf_exempt, name='dispatch')
