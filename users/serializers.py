@@ -68,10 +68,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'password', 'first_name', 'last_name', 'role', 'age', 'location']
 
     def is_valid(self, raise_exception=False):
-        try:
-            self._locations = self.initial_data.pop('locations')
-        except KeyError:
-            self._locations = []
+        self._locations = self.initial_data.pop('locations', list())
         return super().is_valid(raise_exception=raise_exception)
 
     def save(self):
