@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ads.models import Ad, Category
+from ads.models import Ad, Category, AdSelection
 
 
 class AdListSerializer(serializers.ModelSerializer):
@@ -53,6 +53,35 @@ class AdUpdateImageSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         serializer = AdDetailSerializer(instance)
         return serializer.data
+
+
+class SelectionListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AdSelection
+        fields = ['id', 'name']
+
+
+class SelectionDetailSerializer(serializers.ModelSerializer):
+    items = AdDetailSerializer(many=True)
+
+    class Meta:
+        model = AdSelection
+        fields = '__all__'
+
+
+class SelectionCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AdSelection
+        fields = '__all__'
+
+
+class SelectionUpdateSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False, read_only=True)
+    owner = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        model = AdSelection
+        fields = '__all__'
 
 
 class CategorySerializer(serializers.ModelSerializer):

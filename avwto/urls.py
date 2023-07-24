@@ -6,13 +6,15 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from avwto import settings
 from users.views import LocationViewSet, UserViewSet
-from ads.views import CategoryViewSet, AdViewSet
+from ads.views import CategoryViewSet, AdViewSet, SelectionViewSet
 
 router = SimpleRouter()
 router.register('location', LocationViewSet)
 router.register('cat', CategoryViewSet)
 router.register('ad', AdViewSet)
 router.register('user', UserViewSet)
+router.register('selection', SelectionViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),

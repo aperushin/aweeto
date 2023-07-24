@@ -1,11 +1,12 @@
 from django.http import JsonResponse
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.decorators import permission_classes
 from rest_framework.generics import UpdateAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.viewsets import ModelViewSet
 
-from ads.models import Ad, Category
+from ads.models import Ad, Category, AdSelection
+from ads.filtersets import AdFilterSet
+from ads.permissions import IsOwner
 from ads.serializers import (
     CategorySerializer,
     AdListSerializer,
@@ -13,8 +14,11 @@ from ads.serializers import (
     AdCreateSerializer,
     AdUpdateSerializer,
     AdUpdateImageSerializer,
+    SelectionListSerializer,
+    SelectionDetailSerializer,
+    SelectionCreateSerializer,
+    SelectionUpdateSerializer,
 )
-from ads.filtersets import AdFilterSet
 
 
 def index(request):
@@ -44,6 +48,31 @@ class AdViewSet(ModelViewSet):
     def list(self, request, *args, **kwargs):
         self.queryset = self.queryset.order_by('-price')
         return super().list(request, *args, **kwargs)
+
+
+class SelectionViewSet(ModelViewSet):
+    queryset = AdSelection.objects.all()
+    default_serializer = SelectionDetailSerializer
+    serializer_classes = {
+        'list': SelectionListSerializer,
+        'create': SelectionCreateSerializer,
+        'update': SelectionUpdateSerializer,
+        'partial_update': SelectionUpdateSerializer,
+    }
+
+    def get_serializer_class(self):
+        return self.serializer_classes.get(self.action, self.default_serializer)
+
+    def get_permissions(self):
+        if self.action in ['retrieve', 'list']:
+            self.permission_classes = [AllowAny]
+        else:
+            self.permission_classes = [IsOwner]
+
+        return super().get_permissions()
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 
 class AdImageView(UpdateAPIView):
