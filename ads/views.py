@@ -1,12 +1,12 @@
 from django.http import JsonResponse
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import UpdateAPIView
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
 
 from ads.models import Ad, Category, AdSelection
 from ads.filtersets import AdFilterSet
-from ads.permissions import IsOwner
+from ads.permissions import IsOwner, AdPermission
 from ads.serializers import (
     CategorySerializer,
     AdListSerializer,
@@ -41,8 +41,11 @@ class AdViewSet(ModelViewSet):
         return self.serializer_classes.get(self.action, self.default_serializer)
 
     def get_permissions(self):
-        if self.action == 'retrieve':
-            self.permission_classes = [IsAuthenticated]
+        if self.action == 'list':
+            # Ad list can be accessed by unauthorized users
+            self.permission_classes = [AllowAny]
+        else:
+            self.permission_classes = [AdPermission]
         return super().get_permissions()
 
     def list(self, request, *args, **kwargs):
