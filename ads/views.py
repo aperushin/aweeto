@@ -1,6 +1,8 @@
 from django.http import JsonResponse
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.decorators import permission_classes
 from rest_framework.generics import UpdateAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from ads.models import Ad, Category
@@ -33,6 +35,11 @@ class AdViewSet(ModelViewSet):
 
     def get_serializer_class(self):
         return self.serializer_classes.get(self.action, self.default_serializer)
+
+    def get_permissions(self):
+        if self.action == 'retrieve':
+            self.permission_classes = [IsAuthenticated]
+        return super().get_permissions()
 
     def list(self, request, *args, **kwargs):
         self.queryset = self.queryset.order_by('-price')
