@@ -2,7 +2,7 @@ from rest_framework.permissions import BasePermission, SAFE_METHODS
 from users.models import UserRoles
 
 
-class IsOwner(BasePermission):
+class IsSelectionOwner(BasePermission):
     """
     Permission class for AdSelection model views
     """
