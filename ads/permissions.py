@@ -1,4 +1,4 @@
-from rest_framework.permissions import BasePermission, SAFE_METHODS
+from rest_framework.permissions import BasePermission
 from users.models import UserRoles
 
 
@@ -15,12 +15,9 @@ class IsSelectionOwner(BasePermission):
         return request.user == obj.owner
 
 
-class AdPermission(BasePermission):
+class IsOwnerOrStaff(BasePermission):
     """
     Permission class for Ad model views
-
-    Allows access only to authenticated users.
-    Making changes also requires a moderator/admin role or being the ad's author
     """
     message = "Only the ad's owner or a moderator can make changes"
 
@@ -28,6 +25,6 @@ class AdPermission(BasePermission):
         return request.user.is_authenticated
 
     def has_object_permission(self, request, view, obj):
-        if view.action in SAFE_METHODS or request.user.role in [UserRoles.MODERATOR, UserRoles.ADMIN]:
+        if request.user.role in [UserRoles.MODERATOR, UserRoles.ADMIN]:
             return True
         return request.user == obj.author

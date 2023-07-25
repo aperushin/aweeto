@@ -1,11 +1,11 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import UpdateAPIView
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from ads.models import Ad
 from ads.filtersets import AdFilterSet
-from ads.permissions import AdPermission
+from ads.permissions import IsOwnerOrStaff
 from ads.serializers import (
     AdDetailSerializer,
     AdListSerializer,
@@ -26,9 +26,10 @@ class AdViewSet(ModelViewSet):
         'update': AdUpdateSerializer,
         'partial_update': AdUpdateSerializer,
     }
-    default_permissions = [AdPermission]
+    default_permissions = [IsOwnerOrStaff]
     permissions = {
         'list': [AllowAny],
+        'retrieve': [IsAuthenticated],
     }
 
     def get_serializer_class(self):
