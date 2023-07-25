@@ -20,16 +20,17 @@ class SelectionViewSet(ModelViewSet):
         'update': SelectionUpdateSerializer,
         'partial_update': SelectionUpdateSerializer,
     }
+    default_permissions = [IsOwner]
+    permissions = {
+        'retrieve': [AllowAny],
+        'list': [AllowAny],
+    }
 
     def get_serializer_class(self):
         return self.serializer_classes.get(self.action, self.default_serializer)
 
     def get_permissions(self):
-        if self.action in ['retrieve', 'list']:
-            self.permission_classes = [AllowAny]
-        else:
-            self.permission_classes = [IsOwner]
-
+        self.permission_classes = self.permissions.get(self.action, self.default_permissions)
         return super().get_permissions()
 
     def perform_create(self, serializer):

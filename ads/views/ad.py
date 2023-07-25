@@ -26,16 +26,16 @@ class AdViewSet(ModelViewSet):
         'update': AdUpdateSerializer,
         'partial_update': AdUpdateSerializer,
     }
+    default_permissions = [AdPermission]
+    permissions = {
+        'list': [AllowAny],
+    }
 
     def get_serializer_class(self):
         return self.serializer_classes.get(self.action, self.default_serializer)
 
     def get_permissions(self):
-        if self.action == 'list':
-            # Ad list can be accessed by unauthorized users
-            self.permission_classes = [AllowAny]
-        else:
-            self.permission_classes = [AdPermission]
+        self.permission_classes = self.permissions.get(self.action, self.default_permissions)
         return super().get_permissions()
 
     def list(self, request, *args, **kwargs):
