@@ -2,29 +2,27 @@ from rest_framework.permissions import BasePermission
 from users.models import UserRoles
 
 
-class IsSelectionOwner(BasePermission):
-    """
-    Permission class for AdSelection model views
-    """
-    message = "Only the selection's owner can make changes"
+class IsOwner(BasePermission):
+    message = 'You are not the owner of this element'
 
     def has_permission(self, request, view):
         return request.user.is_authenticated
 
     def has_object_permission(self, request, view, obj):
-        return request.user == obj.owner
+        if hasattr(obj, 'owner'):
+            return request.user == obj.owner
+
+        if hasattr(obj, 'author'):
+            return request.user == obj.author
+
+        raise Exception('The model does not have the owner field')
 
 
-class IsOwnerOrStaff(BasePermission):
-    """
-    Permission class for Ad model views
-    """
-    message = "Only the ad's owner or a moderator can make changes"
+class IsStaff(BasePermission):
+    message = "You are not an admin or a moderator"
 
     def has_permission(self, request, view):
         return request.user.is_authenticated
 
     def has_object_permission(self, request, view, obj):
-        if request.user.role in [UserRoles.MODERATOR, UserRoles.ADMIN]:
-            return True
-        return request.user == obj.author
+        return request.user.role in [UserRoles.MODERATOR, UserRoles.ADMIN]

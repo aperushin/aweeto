@@ -5,7 +5,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from ads.models import Ad
 from ads.filtersets import AdFilterSet
-from ads.permissions import IsOwnerOrStaff
+from ads.permissions import IsStaff, IsOwner
 from ads.serializers import (
     AdDetailSerializer,
     AdListSerializer,
@@ -26,7 +26,7 @@ class AdViewSet(ModelViewSet):
         'update': AdUpdateSerializer,
         'partial_update': AdUpdateSerializer,
     }
-    default_permissions = [IsOwnerOrStaff]
+    default_permissions = [IsOwner | IsStaff]
     permissions = {
         'list': [AllowAny],
         'retrieve': [IsAuthenticated],

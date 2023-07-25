@@ -2,7 +2,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny
 
 from ads.models import AdSelection
-from ads.permissions import IsSelectionOwner
+from ads.permissions import IsOwner
 from ads.serializers import (
     SelectionListSerializer,
     SelectionDetailSerializer,
@@ -20,7 +20,7 @@ class SelectionViewSet(ModelViewSet):
         'update': SelectionUpdateSerializer,
         'partial_update': SelectionUpdateSerializer,
     }
-    default_permissions = [IsSelectionOwner]
+    default_permissions = [IsOwner]
     permissions = {
         'retrieve': [AllowAny],
         'list': [AllowAny],
