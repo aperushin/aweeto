@@ -24,11 +24,6 @@ class AdCreateSerializer(serializers.ModelSerializer):
         model = Ad
         exclude = ['image']
 
-    def is_valid(self, raise_exception=False):
-        self.initial_data['author'] = self.initial_data.pop('author_id', None)
-        self.initial_data['category'] = self.initial_data.pop('category_id', None)
-        return super().is_valid(raise_exception=raise_exception)
-
 
 class AdUpdateSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
@@ -37,14 +32,6 @@ class AdUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ad
         fields = '__all__'
-
-    def is_valid(self, raise_exception=False):
-        if 'author_id' in self.initial_data:
-            self.initial_data['author'] = self.initial_data.pop('author_id')
-        if 'category_id' in self.initial_data:
-            self.initial_data['category'] = self.initial_data.pop('category_id')
-
-        return super().is_valid(raise_exception=raise_exception)
 
 
 class AdUpdateImageSerializer(serializers.ModelSerializer):
