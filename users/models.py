@@ -1,6 +1,9 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from users.validators import NotOnDomainValidator, IsOlderThanValidator
+from users.utils import calculate_age
+
 
 class Location(models.Model):
     name = models.CharField(max_length=255)
@@ -23,8 +26,13 @@ class UserRoles(models.TextChoices):
 
 class User(AbstractUser):
     role = models.CharField(max_length=9, choices=UserRoles.choices, default='member')
-    age = models.PositiveSmallIntegerField()
+    email = models.EmailField(validators=[NotOnDomainValidator('rambler.ru')])  # TODO: unique
+    birth_date = models.DateField(null=True, validators=[IsOlderThanValidator(9)])
     location = models.ManyToManyField(Location)
+
+    @property
+    def age(self):
+        return calculate_age(self.birth_date)
 
     def __str__(self):
         return self.username

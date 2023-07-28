@@ -1,8 +1,10 @@
 from django.db import models
+from django.core.validators import MinLengthValidator
 
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=10, null=True, validators=[MinLengthValidator(5)])  # TODO: unique, -null
 
     def __str__(self):
         return self.name
@@ -13,9 +15,9 @@ class Category(models.Model):
 
 
 class Ad(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, validators=[MinLengthValidator(10)])
     author = models.ForeignKey('users.User', on_delete=models.CASCADE)
-    price = models.IntegerField()
+    price = models.PositiveIntegerField()
     description = models.CharField(max_length=1000)
     is_published = models.BooleanField(default=False)
     image = models.ImageField(upload_to='images/', null=True)
