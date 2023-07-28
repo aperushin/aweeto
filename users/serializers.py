@@ -37,7 +37,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'password', 'first_name', 'last_name', 'role', 'age', 'location']
+        fields = ['id', 'username', 'password', 'first_name', 'email', 'last_name', 'role', 'location', 'birth_date']
 
     def is_valid(self, raise_exception=False):
         self._locations = self.initial_data.pop('locations')

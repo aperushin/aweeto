@@ -26,7 +26,7 @@ class UserRoles(models.TextChoices):
 
 class User(AbstractUser):
     role = models.CharField(max_length=9, choices=UserRoles.choices, default='member')
-    email = models.EmailField(unique=True, validators=[NotOnDomainValidator('rambler.ru')])
+    email = models.EmailField(unique=True, blank=False, validators=[NotOnDomainValidator('rambler.ru')])
     birth_date = models.DateField(null=True, validators=[IsOlderThanValidator(9)])
     location = models.ManyToManyField(Location)
 
