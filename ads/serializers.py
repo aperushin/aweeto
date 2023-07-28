@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from ads.models import Ad, Category, AdSelection
+from ads.validators import is_false
 
 
 class AdListSerializer(serializers.ModelSerializer):
@@ -17,6 +18,7 @@ class AdDetailSerializer(serializers.ModelSerializer):
 
 class AdCreateSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
+    is_published = serializers.BooleanField(validators=[is_false])
 
     class Meta:
         model = Ad

@@ -4,7 +4,7 @@ from django.core.validators import MinLengthValidator
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=10, null=True, validators=[MinLengthValidator(5)])  # TODO: unique, -null
+    slug = models.SlugField(max_length=10, unique=True, validators=[MinLengthValidator(5)])
 
     def __str__(self):
         return self.name
