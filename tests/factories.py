@@ -1,4 +1,5 @@
 import factory
+from factory.fuzzy import FuzzyText
 
 from ads.models import Ad, Category
 from users.models import User, UserRoles, Location
@@ -37,7 +38,7 @@ class CategoryFactory(factory.django.DjangoModelFactory):
         model = Category
 
     name = 'test_category'
-    slug = factory.Faker('currency_code')  # Since there's no way to set faker's slug field length
+    slug = FuzzyText(length=10)
 
 
 class AdFactory(factory.django.DjangoModelFactory):

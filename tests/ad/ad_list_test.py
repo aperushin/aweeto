@@ -18,5 +18,5 @@ def test_ad_list(client):
 
     response = client.get('/ad/')
 
-    assert response.status_code == 200
     assert response.data == expected_response
+    assert response.status_code == 200
