@@ -32,6 +32,3 @@ class SelectionViewSet(ModelViewSet):
     def get_permissions(self):
         self.permission_classes = self.permissions.get(self.action, self.default_permissions)
         return super().get_permissions()
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
