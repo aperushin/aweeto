@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'ads',
     'users',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -142,5 +143,12 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ]
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Aweeto API',
+    'DESCRIPTION': 'Aweeto API',
+    'VERSION': '1.0.0',
 }

@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema_view, extend_schema
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import UpdateAPIView
 from django_filters.rest_framework import DjangoFilterBackend
@@ -15,6 +16,14 @@ from ads.serializers import (
 )
 
 
+@extend_schema_view(
+    list=extend_schema(description='Retrieve ad list', summary='Ad list'),
+    retrieve=extend_schema(description='Retrieve an ad', summary='Ad'),
+    create=extend_schema(description='Create an ad', summary='Ad creation'),
+    update=extend_schema(description='Update an ad', summary='Ad update'),
+    partial_update=extend_schema(description='Partially update an ad', summary='Ad partial update'),
+    destroy=extend_schema(description='Delete an ad', summary='Ad deletion'),
+)
 class AdViewSet(ModelViewSet):
     queryset = Ad.objects.all()
     filter_backends = [DjangoFilterBackend]
@@ -44,6 +53,8 @@ class AdViewSet(ModelViewSet):
         return super().list(request, *args, **kwargs)
 
 
+@extend_schema(description='Upload an image for an ad', summary='Upload ad image')
 class AdImageView(UpdateAPIView):
     queryset = Ad.objects.all()
     serializer_class = AdUpdateImageSerializer
+    http_method_names = ['put']
