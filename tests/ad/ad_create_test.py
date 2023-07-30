@@ -13,7 +13,6 @@ def test_create_ad(client, user, category, user_token):
     }
 
     expected_response = {
-        'id': 1,
         'name': 'test ad text',
         'price': 2,
         'description': '',
@@ -28,6 +27,7 @@ def test_create_ad(client, user, category, user_token):
         format='json',
         HTTP_AUTHORIZATION=f'Bearer {user_token}',
     )
+    response.data.pop('id')
 
     assert response.data == expected_response
     assert response.status_code == 201

@@ -10,7 +10,6 @@ def test_create_selection_admin(client, user, ad, admin_token):
     }
 
     expected_response = {
-        'id': 1,
         'name': 'test selection',
         'owner': user.id,
         'items': [ad.pk],
@@ -22,6 +21,7 @@ def test_create_selection_admin(client, user, ad, admin_token):
         format='json',
         HTTP_AUTHORIZATION=f'Bearer {admin_token}',
     )
+    response.data.pop('id')
 
     assert response.data == expected_response
     assert response.status_code == 201
@@ -36,7 +36,6 @@ def test_create_selection_admin_ownerless(client, user, ad, admin_token_and_id):
     }
 
     expected_response = {
-        'id': 2,
         'name': 'test selection',
         'owner': user_id,
         'items': [ad.pk],
@@ -48,6 +47,7 @@ def test_create_selection_admin_ownerless(client, user, ad, admin_token_and_id):
         format='json',
         HTTP_AUTHORIZATION=f'Bearer {token}',
     )
+    response.data.pop('id')
 
     assert response.data == expected_response
     assert response.status_code == 201
@@ -65,7 +65,6 @@ def test_create_selection_user(client, user, ad, user_token_and_id):
     }
 
     expected_response = {
-        'id': 3,
         'name': 'test selection',
         'owner': user_id,
         'items': [ad.pk],
@@ -77,6 +76,7 @@ def test_create_selection_user(client, user, ad, user_token_and_id):
         format='json',
         HTTP_AUTHORIZATION=f'Bearer {token}',
     )
+    response.data.pop('id')
 
     assert response.data == expected_response
     assert response.status_code == 201
