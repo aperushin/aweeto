@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from ads.models import Ad, Category, AdSelection
 from ads.validators import is_false
-from users.models import UserRoles
+from users.models import UserRoles, User
 
 
 class AdListSerializer(serializers.ModelSerializer):
@@ -60,20 +60,19 @@ class SelectionDetailSerializer(serializers.ModelSerializer):
 
 
 class SelectionCreateSerializer(serializers.ModelSerializer):
+    owner = serializers.PrimaryKeyRelatedField(required=False, queryset=User.objects.all())
+
     class Meta:
         model = AdSelection
         fields = '__all__'
 
-    def is_valid(self, raise_exception=False):
+    def create(self, validated_data):
         request = self.context.get('request')
 
-        # Because it can seemingly randomly become Dict or immutable QueryDict
-        self.initial_data = self.initial_data.copy()
+        if 'owner' not in validated_data or request.user.role not in [UserRoles.ADMIN, UserRoles.MODERATOR]:
+            validated_data['owner'] = request.user
 
-        if request.user.role not in [UserRoles.ADMIN, UserRoles.MODERATOR] or 'owner' not in self.initial_data:
-            self.initial_data['owner'] = request.user.id
-
-        return super().is_valid(raise_exception=raise_exception)
+        return super().create(validated_data)
 
 
 class SelectionUpdateSerializer(serializers.ModelSerializer):
